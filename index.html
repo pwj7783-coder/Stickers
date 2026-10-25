@@ -1,66 +1,29 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f8f5ef">
-<title>Diary Doodle Studio · 나만의 낙서 캐릭터</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f5ef">
+<title>Diary Doodle Studio · 나만의 낙서 이미지</title>
 <style>
 :root{--ink:#25231f;--paper:#fbf8f2;--card:#fffdf9;--muted:#777168;--line:#e9e1d6;--accent:#d9e8d4;--pink:#f5dedb}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-rounded,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;line-height:1.55}
-main{width:min(760px,100%);margin:auto;padding:28px 18px 56px}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:800;text-transform:uppercase}
-h1{font-size:clamp(30px,7vw,46px);letter-spacing:-.06em;line-height:1.08;margin:12px 0}h1 span{background:linear-gradient(transparent 63%,#e2ead8 63%);padding:0 4px}
-.lead{color:#625d55;max-width:560px;margin:14px 0 24px}.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;margin:16px 0;box-shadow:0 6px 22px #473a2208}
-.step{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:18px;font-weight:800}.num{display:grid;place-items:center;width:30px;height:30px;background:var(--accent);border-radius:50%;font-size:14px}
-.upload{display:flex;align-items:center;justify-content:center;text-align:center;min-height:170px;border:1.5px dashed #c9c0b3;border-radius:18px;background:#fcfaf5;padding:22px;cursor:pointer}.upload:hover{background:#f6f4ec}.upload input{display:none}.upload strong{display:block;font-size:16px}.upload small{display:block;color:var(--muted);margin-top:5px}
-.preview{display:none;margin-top:14px;text-align:center}.preview img{max-width:100%;max-height:300px;border-radius:14px;object-fit:contain;background:#f5f1e9}.filename{font-size:12px;color:var(--muted);margin-top:6px}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn{border:0;border-radius:999px;padding:13px 18px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:8px}.primary{background:var(--ink);color:white}.secondary{background:var(--accent);color:var(--ink)}.btn:focus-visible,.upload:focus-within{outline:3px solid #b5c9ad;outline-offset:3px}
-.note{font-size:13px;color:var(--muted);margin:12px 2px 0}.prompt{white-space:pre-wrap;font-size:13px;line-height:1.6;background:#f6f2eb;border-radius:14px;padding:15px;max-height:210px;overflow:auto;color:#4d4942}.tag{display:inline-block;font-size:12px;border-radius:999px;padding:5px 10px;background:var(--pink);margin:0 5px 5px 0;font-weight:700}
-footer{text-align:center;font-size:12px;color:var(--muted);padding-top:18px}
-</style>
-</head>
-<body>
-<main>
-  <div class="eyebrow">A tiny creative corner · 01</div>
-  <h1>사진 한 장으로<br><span>다이어리 낙서 캐릭터</span></h1>
-  <p class="lead">사진을 고르고 프롬프트를 복사한 뒤 ChatGPT에 붙여 넣어 보세요. 친구와 함께 귀엽고 엉뚱한 낙서 스타일 캐릭터를 만들 수 있어요.</p>
-  <div><span class="tag">무료로 사용</span><span class="tag">사진은 이 페이지에서 업로드되지 않아요</span></div>
-  <section class="card">
-    <h2 class="step"><span class="num">1</span> 사진 선택하기</h2>
-    <label class="upload" for="photo">
-      <span><strong>＋ 사진을 선택하거나 눌러 주세요</strong><small>JPG · PNG · WEBP · 사진은 미리보기만을 위해 기기 안에서 열립니다.</small></span>
-      <input id="photo" type="file" accept="image/*">
-    </label>
-    <div class="preview" id="preview"><img id="previewImg" alt="선택한 사진 미리보기"><div class="filename" id="filename"></div></div>
-    <p class="note">개인정보 보호를 위해 이 페이지는 사진을 서버로 전송하지 않습니다. 캐릭터 생성을 위해 사진을 ChatGPT에 직접 첨부해야 해요.</p>
-  </section>
-  <section class="card">
-    <h2 class="step"><span class="num">2</span> 프롬프트 복사하기</h2>
-    <div class="prompt" id="prompt">Turn the person in the uploaded photo into a charming, slightly awkward diary doodle character. Use bold, wobbly black fineliner outlines, simplified shapes, and only 3–4 muted pale watercolor washes. Leave lots of clean white paper. Ugly-cute, handmade sketchbook feeling.
-
-Preserve the person's recognizable hairstyle and hair color, glasses, accessories, face shape, and main outfit colors. Use tiny simple dot eyes, a small smile, and subtle blush. Show the full body standing in a relaxed three-quarter view. No background, no cast shadow, no text, no extra objects. Isolated on a transparent background if supported; otherwise use a plain white background.
-
-Keep it loose, imperfect, minimal, sweet, and consistent like a recurring character in a personal diary. Do not make it photorealistic or overly polished.</div>
-    <div class="actions"><button class="btn secondary" id="copy">▣ 프롬프트 복사</button><button class="btn primary" id="open">ChatGPT 열기 ↗</button></div>
-    <p class="note" id="status" aria-live="polite">복사한 프롬프트와 선택한 사진을 ChatGPT 대화창에 넣어 주세요.</p>
-  </section>
-  <section class="card">
-    <h2 class="step"><span class="num">3</span> ChatGPT에서 만들기</h2>
-    <ol style="padding-left:22px;margin-bottom:0">
-      <li>위의 <b>프롬프트 복사</b>를 누르세요.</li>
-      <li><b>ChatGPT 열기</b>를 누르고 사진을 대화창에 직접 첨부하세요.</li>
-      <li>복사한 프롬프트를 붙여 넣고 전송하면 끝!</li>
-    </ol>
-    <p class="note">이미지 생성 가능 여부와 사용량은 ChatGPT 계정 및 이용 제한에 따라 달라질 수 있습니다. 이 페이지 자체는 이미지 생성 API를 호출하지 않습니다.</p>
-  </section>
-  <footer>Diary Doodle Studio · 만든 사진은 자동 저장되지 않아요.</footer>
-</main>
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-rounded,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;line-height:1.55}main{width:min(760px,100%);margin:auto;padding:28px 18px 56px}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:800;text-transform:uppercase}h1{font-size:clamp(30px,7vw,46px);letter-spacing:-.06em;line-height:1.08;margin:12px 0}h1 span{background:linear-gradient(transparent 63%,#e2ead8 63%);padding:0 4px}.lead{color:#625d55;max-width:560px;margin:14px 0 24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;margin:16px 0;box-shadow:0 6px 22px #473a2208}.step{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:18px;font-weight:800}.num{display:grid;place-items:center;width:30px;height:30px;background:var(--accent);border-radius:50%;font-size:14px}
+.upload{display:flex;align-items:center;justify-content:center;text-align:center;min-height:150px;border:1.5px dashed #c9c0b3;border-radius:18px;background:#fcfaf5;padding:22px;cursor:pointer}.upload:hover{background:#f6f4ec}.upload input{display:none}.upload strong{display:block;font-size:16px}.upload small{display:block;color:var(--muted);margin-top:5px}
+.preview,.result{display:none;margin-top:14px;text-align:center}.preview img,.result img{max-width:100%;max-height:440px;border-radius:14px;object-fit:contain;background-color:#f5f1e9;background-image:linear-gradient(45deg,#e8e3dc 25%,transparent 25%),linear-gradient(-45deg,#e8e3dc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#e8e3dc 75%),linear-gradient(-45deg,transparent 75%,#e8e3dc 75%);background-size:18px 18px;background-position:0 0,0 9px,9px -9px,-9px 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn{border:0;border-radius:999px;padding:13px 18px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:8px}.primary{background:var(--ink);color:white}.secondary{background:var(--accent);color:var(--ink)}.btn:disabled{opacity:.5;cursor:wait}.note{font-size:13px;color:var(--muted);margin:12px 2px 0}.status{font-size:14px;font-weight:650;margin-top:12px;min-height:1.5em}footer{text-align:center;font-size:12px;color:var(--muted);padding-top:18px}
+</style></head><body><main>
+<div class="eyebrow">A tiny creative corner · 01</div><h1>사진 한 장으로<br><span>다이어리 낙서 이미지</span></h1>
+<p class="lead">사진을 올리면 정해둔 손그림 다이어리 스타일로 자동 변환해요. 인물뿐 아니라 동물, 음식, 사물, 식물, 풍경에도 같은 그림체를 적용합니다.</p>
+<section class="card"><h2 class="step"><span class="num">1</span> 사진 선택하기</h2>
+<label class="upload" for="photo"><span><strong>＋ 사진을 선택하거나 눌러 주세요</strong><small>JPG · PNG · WEBP · 사진은 변환을 위해 Gemini로 전송됩니다.</small></span><input id="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
+<div class="preview" id="preview"><img id="previewImg" alt="선택한 사진 미리보기"></div><p class="note">선택한 사진은 이미지 변환 요청에 사용됩니다. API 키는 이 페이지에 공개되지 않아요.</p></section>
+<section class="card"><h2 class="step"><span class="num">2</span> 낙서 이미지 만들기</h2>
+<button class="btn primary" id="generate" disabled>✦ 자동으로 변환하기</button><p class="status" id="status" aria-live="polite">먼저 사진을 선택해 주세요.</p>
+<div class="result" id="result"><img id="resultImg" alt="생성된 다이어리 낙서 이미지"><div class="actions"><a class="btn secondary" id="download" download="diary-doodle.png">↓ PNG 저장하기</a></div></div>
+</section><footer>Diary Doodle Studio · 생성 결과는 자동 저장되지 않아요.</footer></main>
 <script>
-const photo=document.getElementById('photo'),preview=document.getElementById('preview'),img=document.getElementById('previewImg'),filename=document.getElementById('filename'),status=document.getElementById('status');
-let currentUrl=null;
-photo.addEventListener('change',()=>{const file=photo.files&&photo.files[0];if(!file)return;if(!file.type.startsWith('image/')){status.textContent='이미지 파일을 선택해 주세요.';return}if(currentUrl)URL.revokeObjectURL(currentUrl);currentUrl=URL.createObjectURL(file);img.src=currentUrl;filename.textContent=file.name;preview.style.display='block';status.textContent='사진 미리보기가 준비됐어요. ChatGPT에 사진을 직접 첨부해 주세요.'});
-document.getElementById('copy').addEventListener('click',async()=>{const text=document.getElementById('prompt').innerText;try{await navigator.clipboard.writeText(text);status.textContent='프롬프트를 복사했어요! 이제 ChatGPT를 열어 사진과 함께 붙여 넣으세요.'}catch(e){const range=document.createRange();range.selectNodeContents(document.getElementById('prompt'));const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);status.textContent='자동 복사가 안 되어 프롬프트를 선택했어요. 길게 눌러 복사해 주세요.'}});
-document.getElementById('open').addEventListener('click',()=>window.open('https://chatgpt.com/','_blank','noopener,noreferrer'));
-</script>
-</body>
-</html>
+const photo=document.getElementById('photo'),preview=document.getElementById('preview'),previewImg=document.getElementById('previewImg'),generate=document.getElementById('generate'),status=document.getElementById('status'),result=document.getElementById('result'),resultImg=document.getElementById('resultImg'),download=document.getElementById('download');
+let selectedFile=null,previewUrl=null,resultUrl=null;
+photo.addEventListener('change',()=>{const f=photo.files&&photo.files[0];if(!f)return;if(!['image/jpeg','image/png','image/webp'].includes(f.type)){status.textContent='JPG, PNG 또는 WEBP 이미지 파일을 선택해 주세요.';return}if(f.size>12*1024*1024){status.textContent='사진 크기는 12MB 이하로 선택해 주세요.';return}selectedFile=f;if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=URL.createObjectURL(f);previewImg.src=previewUrl;preview.style.display='block';generate.disabled=false;result.style.display='none';status.textContent='사진이 준비됐어요. 자동 변환을 눌러 주세요.'});
+generate.addEventListener('click',async()=>{if(!selectedFile)return;generate.disabled=true;generate.textContent='변환 중…';status.textContent='그림체를 적용하고 있어요. 잠시 기다려 주세요.';result.style.display='none';try{const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=reject;reader.readAsDataURL(selectedFile)});const response=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:data,mimeType:selectedFile.type})});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'이미지 생성에 실패했어요.');if(!payload.image)throw new Error('응답에서 이미지 결과를 찾지 못했어요.');if(resultUrl)URL.revokeObjectURL(resultUrl);resultUrl='data:'+payload.mimeType+';base64,'+payload.image;resultImg.src=resultUrl;download.href=resultUrl;download.download='diary-doodle.png';result.style.display='block';status.textContent='완성됐어요! 아래에서 PNG를 저장해 주세요.'}catch(e){status.textContent=e.message||'오류가 발생했어요. 잠시 후 다시 시도해 주세요.'}finally{generate.disabled=false;generate.textContent='✦ 다시 변환하기'}});
+</script></body></html>
