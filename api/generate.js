@@ -20,7 +20,7 @@ export default async function handler(req, res) {
           { type: "image", mime_type: mimeType, data: image },
           { type: "text", text: prompt }
         ],
-        response_format: { type: "image", mime_type: "image/png", image_size: "1K" }
+        response_format: { type: "image", mime_type: "image/jpeg", image_size: "1K" }
       })
     });
     const data = await upstream.json();
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     }
     const generated = data.output_image?.data || data.steps?.flatMap(s => s.content || []).find(c => c.type === "image")?.data;
     if (!generated) return res.status(502).json({ error: "Gemini가 이미지 결과를 반환하지 않았어요. 다시 시도해 주세요." });
-    return res.status(200).json({ image: generated, mimeType: data.output_image?.mime_type || "image/png" });
+    return res.status(200).json({ image: generated, mimeType: data.output_image?.mime_type || "image/jpeg" });
   } catch (error) {
     console.error("Image generation error", error);
     return res.status(500).json({ error: "처리 중 오류가 발생했어요. 잠시 후 다시 시도해 주세요." });
